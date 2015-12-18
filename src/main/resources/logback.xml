@@ -16,7 +16,6 @@
 
   <root level="info">
     <appender-ref ref="STDOUT" />
-	<appender-ref ref="FILE" />
   </root>
 
   <logger name="ch.qos.logback" level="OFF" additivity="false" />
