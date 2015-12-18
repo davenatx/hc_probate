@@ -40,7 +40,7 @@ import scala.annotation.tailrec
  */
 
 trait ProvateComponent extends LazyLogging {
-  this: AS400Component =>
+  this: AS400Component ⇒
 
   /**
    * Read records from the import file
@@ -53,10 +53,10 @@ trait ProvateComponent extends LazyLogging {
     val seqLoanWrapper = withSequentialFile[ImportRecord](seqFileFunc) _
 
     val seqRecords = seqLoanWrapper {
-      seqFile =>
+      seqFile ⇒
         {
           seqFile.positionCursorBeforeFirst()
-          readRecords[ImportRecord](seqFile, Nil, () => new ImportRecord).reverse
+          readRecords[ImportRecord](seqFile, Nil, () ⇒ new ImportRecord).reverse
         }
     }
     seqRecords
@@ -71,9 +71,9 @@ trait ProvateComponent extends LazyLogging {
     val seqLoanWrapper = withWriteSequentialFile(seqFileFunc) _
 
     seqLoanWrapper {
-      seqFile =>
+      seqFile ⇒
         {
-          records.map(record => { seqFile.write(record) })
+          records.map(record ⇒ { seqFile.write(record) })
         }
     }
   }
