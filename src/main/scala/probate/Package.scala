@@ -38,8 +38,8 @@ package object probate {
   lazy val as400Password = config.getString("as400Password")
   lazy val importFileLib = config.getString("importFileLib")
   lazy val importFile = config.getString("importFile")
-  lazy val documentType = config.getString("sdnDocumentType")
   lazy val actionFlag = config.getString("actionFlag")
   lazy val sourceType = config.getString("sourceType")
   lazy val falloutFlag = config.getString("falloutFlag")
+  lazy val csvFile = config.getString("csvFile")
 }
