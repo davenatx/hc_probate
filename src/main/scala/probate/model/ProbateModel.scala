@@ -27,6 +27,7 @@
 package probate.model
 
 import scala.io.Source
+import scala.annotation.tailrec
 import com.typesafe.scalalogging.LazyLogging
 import probate._
 
@@ -44,10 +45,16 @@ case class ProbateCSVRecord(causeNumber: String, fileMonthDay: String,
 case class ProbateDBRecord(documentNumber: String, fileMonthDay: Int,
                            fileYear: Int, documentType: String, party1: String)
 
-object Probate extends LazyLogging {
+/**
+ * Process CSV File
+ */
+object ProbateCSV extends LazyLogging {
 
   type Line = String
 
+  /**
+   * Parse Each Line from the CSV file and create a ProbateCSVRecord
+   */
   private def parseLine(line: Line): ProbateCSVRecord = {
     logger.debug("Line: " + line)
     val Array(
@@ -59,7 +66,7 @@ object Probate extends LazyLogging {
       middle,
       suffix,
       documentType) = line.split(",").map(_.trim)
-    
+
     ProbateCSVRecord(
       causeNumber,
       fileMonthDay,
@@ -69,11 +76,11 @@ object Probate extends LazyLogging {
       middle,
       suffix,
       documentType)
-
   }
 
-  import scala.annotation.tailrec
-
+  /**
+   * Parse the CSV file and return a list of ProbateCSVRecord
+   */
   def parseCSV(): List[ProbateCSVRecord] = {
 
       @tailrec
