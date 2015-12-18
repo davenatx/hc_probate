@@ -1,5 +1,7 @@
 import Dependencies._ 
 
+import scalariform.formatter.preferences._
+
 name := "hc_probate"
 
 version := "0.1"
@@ -19,5 +21,15 @@ git.baseVersion := "1.0"
 showCurrentGitBranch
 
 scalariformSettings
+
+ScalariformKeys.preferences := ScalariformKeys.preferences.value
+  .setPreference(AlignParameters, true)
+  .setPreference(AlignSingleLineCaseStatements, true)
+  .setPreference(CompactControlReadability, true)
+  .setPreference(DoubleIndentClassDeclaration, true)
+  .setPreference(IndentLocalDefs, true)
+  .setPreference(PreserveDanglingCloseParenthesis, true)
+  .setPreference(RewriteArrowSymbols, true)
+
 
 resolvers += "Github Repo" at "http://davenatx.github.io/maven"
