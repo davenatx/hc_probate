@@ -112,7 +112,8 @@ trait AS400Component extends LazyLogging {
   }
 
   // Funciton to return the QSYS Path
-  val qsysObjectPath = (name: String, library: String) => new QSYSObjectPathName(library, name, "*FIRST", "MBR")
+  val qsysObjectPath = (name: String, library: String) ⇒
+    new QSYSObjectPathName(library, name, "*FIRST", "MBR")
 
   /**
    * Create Keyed File
@@ -143,18 +144,20 @@ trait AS400Component extends LazyLogging {
   /**
    * Loan Wrapper for KeyedFile
    *
-   * Enclose behavior that opens the file in fileFunc.  This encapsulates connection resouce used
-   * to both open and read the file in the loan pattern.
+   * Enclose behavior that opens the file in fileFunc.  This encapsulates
+   * connection resouce used to both open and read the file in the loan
+   * pattern.
    *
-   * KeyedFile is specified so specific methods like positionCursorBefore, etc... work
+   * KeyedFile is specified so specific methods like positionCursorBefore
    *
    */
-  def withKeyedFile[T <: Record](fileFunc: AS400 => KeyedFile)(func: KeyedFile => List[T]): List[T] = {
+  def withKeyedFile[T <: Record](fileFunc: AS400 ⇒ KeyedFile)(func: KeyedFile ⇒ List[T]): List[T] = {
     val as400 = connection
     val file = fileFunc(as400)
     try {
       func(file)
-    } finally {
+    }
+    finally {
       logger.debug("Closing file: {}", file.getFileName)
       file.close
       returnConnection(as400)
@@ -164,18 +167,20 @@ trait AS400Component extends LazyLogging {
   /**
    * Loan Wrapper for performing Write operations to KeyedFile
    *
-   * Enclose behavior that opens the file in fileFunc.  This encapsulates connection resouce used
-   * to both open and write the file in the loan pattern.
+   * Enclose behavior that opens the file in fileFunc.  This encapsulates
+   * connection resouce used to both open and write the file in the loan
+   * pattern.
    *
-   * KeyedFile is specified so specific methods like positionCursorBefore, etc... work
+   * KeyedFile is specified so specific methods like positionCursorBefore
    *
    */
-  def withWriteKeyedFile(fileFunc: AS400 => KeyedFile)(func: KeyedFile => Unit): Unit = {
+  def withWriteKeyedFile(fileFunc: AS400 ⇒ KeyedFile)(func: KeyedFile ⇒ Unit): Unit = {
     val as400 = connection
     val file = fileFunc(as400)
     try {
       func(file)
-    } finally {
+    }
+    finally {
       logger.debug("Closing file: {}", file.getFileName)
       file.close
       returnConnection(as400)
@@ -185,16 +190,18 @@ trait AS400Component extends LazyLogging {
   /**
    * Loan Wrapper for SequentialFile
    *
-   * Enclose behavior that opens the file in fileFunc.  This encapsulates connection resouce used
-   * to both open and read the file in the loan pattern.
+   * Enclose behavior that opens the file in fileFunc.  This encapsulates
+   * connection resouce used to both open and read the file in the loan
+   * pattern.
    *
    */
-  def withWriteSequentialFile(fileFunc: AS400 => SequentialFile)(func: SequentialFile => Unit): Unit = {
+  def withWriteSequentialFile(fileFunc: AS400 ⇒ SequentialFile)(func: SequentialFile ⇒ Unit): Unit = {
     val as400 = connection
     val file = fileFunc(as400)
     try {
       func(file)
-    } finally {
+    }
+    finally {
       logger.debug("Closing file: {}", file.getFileName)
       file.close
       returnConnection(as400)
@@ -204,16 +211,18 @@ trait AS400Component extends LazyLogging {
   /**
    * Loan Wrapper for SequentialFile
    *
-   * Enclose behavior that opens the file in fileFunc.  This encapsulates connection resouce used
-   * to both open and write the file in the loan pattern.
+   * Enclose behavior that opens the file in fileFunc.  This encapsulates
+   * connection resouce used to both open and write the file in the loan
+   * pattern.
    *
    */
-  def withSequentialFile[T <: Record](fileFunc: AS400 => SequentialFile)(func: SequentialFile => List[T]): List[T] = {
+  def withSequentialFile[T <: Record](fileFunc: AS400 ⇒ SequentialFile)(func: SequentialFile ⇒ List[T]): List[T] = {
     val as400 = connection
     val file = fileFunc(as400)
     try {
       func(file)
-    } finally {
+    }
+    finally {
       logger.debug("Closing file: {}", file.getFileName)
       file.close
       returnConnection(as400)
@@ -223,14 +232,14 @@ trait AS400Component extends LazyLogging {
   /**
    * Recurisve method for reading records with an equal key from a KeyedFile.
    *
-   * func: () = T is used as a "Factory" for the specific DTO object expected to be returned
-   * from the call.
+   * func: () = T is used as a "Factory" for the specific DTO object expected
+   * to be returned from the call.
    */
   @tailrec
-  final def readNextEqualRecords[T <: Record](keyedFile: KeyedFile, key: Array[Object], acc: List[T], func: () => T): List[T] = {
+  final def readNextEqualRecords[T <: Record](keyedFile: KeyedFile, key: Array[Object], acc: List[T], func: () ⇒ T): List[T] = {
     keyedFile.readNextEqual(key) match {
-      case null => acc
-      case r => {
+      case null ⇒ acc
+      case r ⇒ {
         val rec = func()
         rec.setContents(r.getContents)
         readNextEqualRecords(keyedFile, key, rec :: acc, func)
@@ -241,14 +250,14 @@ trait AS400Component extends LazyLogging {
   /**
    * Recurisve method for reading records from a SequentialFile.
    *
-   * func: () = T is used as a "Factory" for the specific DTO object expected to be returned
-   * from the call.
+   * func: () = T is used as a "Factory" for the specific DTO object expected
+   * to be returned from the call.
    */
   @tailrec
-  final def readRecords[T <: Record](seqFile: SequentialFile, acc: List[T], func: () => T): List[T] = {
+  final def readRecords[T <: Record](seqFile: SequentialFile, acc: List[T], func: () ⇒ T): List[T] = {
     seqFile.readNext() match {
-      case null => acc
-      case r => {
+      case null ⇒ acc
+      case r ⇒ {
         val rec = func()
         rec.setContents(r.getContents)
         readRecords(seqFile, rec :: acc, func)
@@ -260,11 +269,12 @@ trait AS400Component extends LazyLogging {
    * Function that takes the name and library of a file and returns a function
    * that takes an AS400 object => KeyedFile object
    *
-   * This function is passed as a parameter to loan wrapper methods.  This ensures the same connection is used to
-   * create/open the file, read the records.
+   * This function is passed as a parameter to loan wrapper methods.  This
+   * ensures the same connection is used to create/open the file, read the
+   * records.
    */
-  val keyedFileFunc = (name: String, library: String, openType: Int, blockingFactor: Int, commitLockLevel: Int) => {
-    (as400: AS400) =>
+  val keyedFileFunc = (name: String, library: String, openType: Int, blockingFactor: Int, commitLockLevel: Int) ⇒ {
+    (as400: AS400) ⇒
       {
         val keyedFile = createKeyedFile(as400, name, library)
         keyedFile.open(openType, blockingFactor, commitLockLevel)
@@ -276,11 +286,12 @@ trait AS400Component extends LazyLogging {
    * Function that takes the name and library of a file and returns a function
    * that takes an AS400 object => SequentialFile
    *
-   * This function is passed as a parameter to loan wrapper methods.  This ensures the same connection is used to
-   * create/open the file, read the records.
+   * This function is passed as a parameter to loan wrapper methods.  This
+   * ensures the same connection is used to create/open the file, read the
+   * records.
    */
-  val sequentialFileFunc = (name: String, library: String, openType: Int, blockingFactor: Int, commitLockLevel: Int) => {
-    (as400: AS400) =>
+  val sequentialFileFunc = (name: String, library: String, openType: Int, blockingFactor: Int, commitLockLevel: Int) ⇒ {
+    (as400: AS400) ⇒
       {
         val seqFile = createSequentialFile(as400, name, library)
         seqFile.open(openType, blockingFactor, commitLockLevel)
