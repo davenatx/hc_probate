@@ -26,12 +26,16 @@
  */
 package probate.model
 
+import scala.io.Source
+import com.typesafe.scalalogging.LazyLogging
+import probate._
+
 /**
  * Record parsed from CSV File
  */
-case class ProbateCSVRecord(causeNumber: String, fileMonthDay: Int,
-                            fileYear: Int, lastName: String, firstName: String,
-                            middle: String, suffix: String,
+case class ProbateCSVRecord(causeNumber: String, fileMonthDay: String,
+                            fileYear: String, lastName: String,
+                            firstName: String, middle: String, suffix: String,
                             documentType: String)
 
 /**
@@ -39,3 +43,48 @@ case class ProbateCSVRecord(causeNumber: String, fileMonthDay: Int,
  */
 case class ProbateDBRecord(documentNumber: String, fileMonthDay: Int,
                            fileYear: Int, documentType: String, party1: String)
+
+object Probate extends LazyLogging {
+
+  type Line = String
+
+  private def parseLine(line: Line): ProbateCSVRecord = {
+    logger.debug("Line: " + line)
+    val Array(
+      causeNumber,
+      fileMonthDay,
+      fileYear,
+      lastName,
+      firstName,
+      middle,
+      suffix,
+      documentType) = line.split(",").map(_.trim)
+    
+    ProbateCSVRecord(
+      causeNumber,
+      fileMonthDay,
+      fileYear,
+      lastName,
+      firstName,
+      middle,
+      suffix,
+      documentType)
+
+  }
+
+  import scala.annotation.tailrec
+
+  def parseCSV(): List[ProbateCSVRecord] = {
+
+      @tailrec
+      def processLines(xs: List[Line], acc: List[ProbateCSVRecord]): List[ProbateCSVRecord] = xs match {
+        case head :: tail ⇒ processLines(tail, parseLine(head) :: acc)
+        case List()       ⇒ acc
+      }
+
+    processLines(Source.fromFile(csvFile).getLines.toList, Nil).reverse
+
+  }
+
+  def apply() = parseCSV()
+}
