@@ -9,9 +9,7 @@ the TIMS format
 
 ToDo
 ----
-* Is MRS a suffix?  I do not believe it is.
-* How should I handle records with a blank first name?
-* What should I do about records missing a document type? (Already added NOTPRO
- to a few blank ones in vol 1)
-* I completed the rough CSV parser.  Now I need to transform that list of 
- records to Database Records
+* Is MRS a suffix?  **No**
+* How should I handle records with a blank first name?  **Leave them as is and set the encoding to I**
+* What should I do about records missing a document type? **NOTPRO**
+* Current Status: **?**
