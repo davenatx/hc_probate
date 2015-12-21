@@ -54,6 +54,7 @@ object ProbateCSV extends LazyLogging {
 
   /**
    * Parse Each Line from the CSV file and create a ProbateCSVRecord
+   * Each String is trimmed as it is read
    */
   private def parseLine(line: Line): ProbateCSVRecord = {
     logger.debug("Line: " + line)
