@@ -40,12 +40,6 @@ case class ProbateCSVRecord(causeNumber: String, fileMonthDay: String,
                             documentType: String)
 
 /**
- * Record formatted for the Database
- */
-case class ProbateDBRecord(documentNumber: String, fileMonthDay: Int,
-                           fileYear: Int, documentType: String, party1: String)
-
-/**
  * Helpers for handling conversion between CSV Record and DB Record
  */
 object ProbateHelpers extends LazyLogging {
