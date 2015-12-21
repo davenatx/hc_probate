@@ -13,5 +13,5 @@ ToDo
 * How should I handle records with a blank first name?
 * What should I do about records missing a document type? (Already added NOTPRO
  to a few blank ones in vol 1)
-* I completed the rought CSV parser.  Now I need to convert that list of 
+* I completed the rough CSV parser.  Now I need to transform that list of 
  records to Database Records
