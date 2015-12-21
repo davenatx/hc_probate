@@ -46,6 +46,16 @@ case class ProbateDBRecord(documentNumber: String, fileMonthDay: Int,
                            fileYear: Int, documentType: String, party1: String)
 
 /**
+ * Helpers for handling conversion between CSV Record and DB Record
+ */
+object ProbateHelpers extends LazyLogging {
+  /* Convert from the ProbateCSV format to the DB Party format */
+  def formatParty(lastName: String, firstName: String, middle: String, suffix: String): String = {
+    (lastName + "," + firstName + " " + middle + " " + suffix).trim
+  }
+}
+
+/**
  * Process CSV File
  */
 object ProbateCSV extends LazyLogging {
@@ -57,7 +67,7 @@ object ProbateCSV extends LazyLogging {
    * Each String is trimmed as it is read
    */
   private def parseLine(line: Line): ProbateCSVRecord = {
-    logger.debug("Line: " + line)
+    logger.info("Line: " + line)
     val Array(
       causeNumber,
       fileMonthDay,
@@ -66,7 +76,7 @@ object ProbateCSV extends LazyLogging {
       firstName,
       middle,
       suffix,
-      documentType) = line.split(",").map(_.trim)
+      documentType) = line.trim.split(",").map(_.trim)
 
     ProbateCSVRecord(
       causeNumber,
