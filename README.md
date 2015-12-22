@@ -4,7 +4,7 @@ HC_Probate
 Overview
 --------
 
-The HC Probate index files are stored in Comma Separated Values (CSV) files.  This project parses 
+The HC Probate index is stored in Comma Separated Values (CSV) files.  This project parses 
 the CSV files, converts the data to the TIMS import format and writes the output to the IBM i.
 
 Requirements
