@@ -29,9 +29,9 @@ val csvRecords = ProbateCSV()
 probateService.convert(csvRecords)
 ````
 
-Example **settings.properties** file
+Example settings.properties file
 ------------------------------------
-This is an example of the settings.properties file:
+This is an example of the **settings.properties** file:
 ````
 // AS400 Information
 as400Server=
