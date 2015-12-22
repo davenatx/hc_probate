@@ -43,9 +43,18 @@ case class ProbateCSVRecord(causeNumber: String, fileMonthDay: String,
  * Helpers for handling conversion between CSV Record and DB Record
  */
 object ProbateHelpers extends LazyLogging {
+
   /* Convert from the ProbateCSV format to the DB Party format */
   def formatParty(lastName: String, firstName: String, middle: String, suffix: String): String = {
-    (lastName + "," + firstName + " " + middle + " " + suffix).trim
+    lastName + "," + firstName + formatToken(middle) + formatToken(suffix)
+  }
+
+  /**
+   * If the token is empty String, return empty.  Otherwise prepend space
+   */
+  def formatToken(token: String): String = token match {
+    case "" ⇒ ""
+    case _  ⇒ " " + token
   }
 }
 

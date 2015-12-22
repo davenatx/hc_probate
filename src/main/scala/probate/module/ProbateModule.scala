@@ -26,9 +26,9 @@
  */
 package probate.module
 /**
- * Mixed in ofac services
+ * Mixed in probate services
  */
 object ProbateModule {
   val as400Service = new AS400LifecycleComponent
-  //val ofacService = new OFACComponent with AS400Component
+  val probateService = new ProbateComponent with AS400Component
 }

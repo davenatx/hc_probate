@@ -33,13 +33,18 @@ package object probate {
 
   private val config = ConfigFactory.load("settings.properties")
 
+  /* AS/400 Informatoin */
   lazy val as400Server = config.getString("as400Server")
   lazy val as400Userprofile = config.getString("as400Userprofile")
   lazy val as400Password = config.getString("as400Password")
   lazy val importFileLib = config.getString("importFileLib")
   lazy val importFile = config.getString("importFile")
+  /* TIMS Options */
+  lazy val countyCode = config.getString("countyCode")
   lazy val actionFlag = config.getString("actionFlag")
   lazy val sourceType = config.getString("sourceType")
   lazy val falloutFlag = config.getString("falloutFlag")
+  lazy val p1Encoding = config.getString("p1Encoding")
+  /* CSV File */
   lazy val csvFile = config.getString("csvFile")
 }
