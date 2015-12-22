@@ -4,17 +4,18 @@ HC_Probate
 Overview
 --------
 
-This program imports the HC Probate index from CSV files and converts it to
-the TIMS format
+The HC Probate index files are stored in Comma Separated Values (CSV) files.  This project parses 
+the CSV files, converts the data to the TIMS import format and writes the output to the IBM i.
 
 Requirements
 ------------
 * Is MRS a suffix?  **No**
-* How should I handle records with a blank first name?  **Leave them as is and set the encoding to I**
-* For the "last name only" records, should I post it as lastname,?  **I need to test this**
+* How should I handle records with a blank first name? **Leave them as is and set the encoding to 
+  I**
+* For the "last name only" records, should I post it as "lastname,"?  **I believe so, but I need to 
+  test this**
 * What should I do about records missing a document type? **NOTPRO**
-* I have verified the CSV parser sucessfully parses all 4 CSV files.
-* This should live on the IBM i in library **HCBCKPLNT**.
+* Verified the CSV parser sucessfully parses all 4 CSV files? **Yes**
 
 REPL
 ----
