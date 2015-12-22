@@ -14,6 +14,7 @@ Requirements
 * For the "last name only" records, should I post it as lastname,?  **I need to test this**
 * What should I do about records missing a document type? **NOTPRO**
 * I have verified the CSV parser sucessfully parses all 4 CSV files.
+* This should live on the IBM i in library **HCBCKPLNT**.
 
 REPL
 ----
