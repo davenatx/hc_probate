@@ -91,8 +91,8 @@ trait ProbateComponent extends LazyLogging {
           record.documentNumber = head.causeNumber
           record.sourceType = sourceType // From properties file
           record.documentType = head.documentType
-          record.fileMonthDay = new BigDecimal(head.fileMonthDay.toInt)
-          record.fileYear = new BigDecimal(head.fileYear.toInt)
+          record.fileMonthDay = new BigDecimal(head.fileMonthDay)
+          record.fileYear = new BigDecimal(head.fileYear)
           record.party1Name = ProbateHelpers.formatParty(
             head.lastName,
             head.firstName,
