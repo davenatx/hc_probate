@@ -19,7 +19,7 @@ Requirements
 
 REPL
 ----
-Here is the code to execuite this process from the REPL:
+Here is the code to execute this process from the REPL:
 ````
 import probate.model._
 import probate.module.ProbateModule._
